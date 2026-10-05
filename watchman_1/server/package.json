@@ -1,0 +1,28 @@
+{
+  "name": "incident-response-backen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nodemon src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js | pino-pretty -c",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "mongoose": "^9.10.3",
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "pino-pretty": "^13.1.3"
+  }
+}

@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slateDark: #0f172a;
+}
+
+body {
+  background-color: var(--color-slateDark);
+  color: var(--color-slate-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
