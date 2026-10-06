@@ -452,3 +452,11 @@ Plain-English summary of what we found in the starting code:
 ## 2026-10-07: Complete hands-on manual
 
 Added `docs/MANUAL.md`: a baby-steps guide to every screen, button, role and feature. It walks through three full incident stories (API data theft, ransomware, CFO email takeover) played by all four roles, the tamper/evidence/fake-code demos, a rulebook cheat-sheet (which decision starts which clock), a permissions table, AI modes and checks, settings, troubleshooting, and a final "seen everything" checklist. All facts were taken from the actual code (rules JSON, controllers, components), not guessed.
+
+## 2026-10-07: Presentation script
+
+Added `docs/PITCH_SCRIPT.md`: a 5–6 minute, two-person script. It starts with an "understand it first" section (the problem, the three core ideas with analogies, the 5 things to remember), then 8 timed moments, each with what to click, the one idea to land, and example words to say in your own way. It also covers pre-stage prep (including a pre-filled backup incident for the report part), how to split the moments between two people, recovery lines for on-stage problems, and short answers to likely judge questions.
+
+## 2026-10-07: Two-laptop setup
+
+Added `docs/TWO_LAPTOP_SETUP.md`: how to run the AI (Ollama + phi4-mini) on our GPU laptop while a teammate presents Watchman from his laptop over Wi-Fi. Explains why `localhost` cannot work (it always means "this same computer"), how to open Ollama to the network for one IP only (firewall), plus Plan B (phone hotspot when venue Wi-Fi blocks laptop-to-laptop traffic) and Plan C (`AI_MODE=replay`, fully offline). Also updated the pitch script to say "on our own hardware" instead of "on this laptop".
