@@ -1,0 +1,16 @@
+{
+  "id": "PB-BEC",
+  "name": "Business email compromise / account takeover",
+  "description": "A user's mailbox or cloud account is taken over (phishing, token theft) and used for fraud or data theft.",
+  "keywords": ["phish", "mailbox", "email", "inbox rule", "forward", "impossible travel", "token", "invoice", "bank details", "mfa", "sign-in", "cfo"],
+  "attack": ["T1566.002", "T1557", "T1539", "T1114.003", "T1078.004", "T1534"],
+  "steps": [
+    { "id": "PB-BEC-D1", "phase": "DETECTION_ANALYSIS", "text": "Review sign-in logs for the account: risky sign-ins, unfamiliar IPs/countries, session tokens reused from new devices.", "evidence": ["Entra ID sign-in logs"], "attack": ["T1078.004", "T1539"] },
+    { "id": "PB-BEC-D2", "phase": "DETECTION_ANALYSIS", "text": "List mailbox rules, forwarding and delegated access; search the audit log for which emails/attachments were read or exported.", "evidence": ["Inbox rule export", "Mailbox audit log"], "attack": ["T1114.003"], "suggestsFact": "personal_data_breach" },
+    { "id": "PB-BEC-C1", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Revoke all sessions and refresh tokens, reset the password, and re-register MFA with phishing-resistant methods.", "evidence": ["Session revocation log"] },
+    { "id": "PB-BEC-C2", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Remove malicious inbox rules and forwarding; block the external forwarding address and the phishing domain.", "evidence": ["Change ticket"] },
+    { "id": "PB-BEC-C3", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Contact Payments immediately: freeze or recall any payment instructed by the compromised account; warn the supplier through a known phone number.", "evidence": ["Payment recall request"], "attack": ["T1534"] },
+    { "id": "PB-BEC-C4", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Purge the phishing email from all mailboxes and identify other recipients who clicked.", "evidence": ["Purge report"], "attack": ["T1566.002"] },
+    { "id": "PB-BEC-R1", "phase": "POST_INCIDENT", "text": "Enforce conditional access / token protection for executives, and run targeted phishing awareness for finance staff.", "evidence": [] }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ransomware",
+  "title": "Ransomware encrypting core loan servers",
+  "severity": "CRITICAL",
+  "summary": "Double-extortion ransomware on the loan platform; data possibly stolen before encryption.",
+  "description": "Microsoft Defender for Endpoint raised 'Ransomware behaviour detected' on LN-APP-02 and LN-DB-01 (India loan-processing cluster) at 06:41 UTC. Volume shadow copies were deleted with vssadmin, files renamed to .lockd, and a ransom note README_RESTORE.txt claims 300 GB of data was stolen and will be leaked in 5 days unless paid. Beaconing to 198.51.100.23 over HTTPS every 60s since 2 days earlier. A domain admin account (svc_backup) was used for lateral movement via RDP. The loan ledger for ~180,000 Indian and ~12,000 EU customers is on the affected database.",
+  "sentinel": {
+    "providerName": "Microsoft Defender XDR",
+    "incidentNumber": 4131,
+    "title": "Multi-stage incident involving Ransomware & Lateral movement on multiple endpoints",
+    "severity": "High",
+    "status": "Active",
+    "firstActivityTimeUtc": "2026-10-04T06:12:00Z",
+    "lastActivityTimeUtc": "2026-10-06T06:41:22Z",
+    "tactics": ["LateralMovement", "CommandAndControl", "Exfiltration", "Impact"],
+    "entities": [
+      { "kind": "Host", "hostName": "LN-APP-02" },
+      { "kind": "Host", "hostName": "LN-DB-01" },
+      { "kind": "Account", "accountName": "svc_backup" },
+      { "kind": "Ip", "address": "198.51.100.23" },
+      { "kind": "File", "name": "README_RESTORE.txt" }
+    ],
+    "alertProductNames": ["Microsoft Defender for Endpoint", "Microsoft Defender for Identity"]
+  }
+}

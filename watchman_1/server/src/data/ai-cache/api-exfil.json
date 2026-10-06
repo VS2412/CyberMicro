@@ -1,0 +1,56 @@
+{
+  "recordedAt": "2026-10-06T11:14:05.696Z",
+  "provider": "ollama",
+  "model": "phi4-mini",
+  "onDevice": true,
+  "mode": "live",
+  "output": {
+    "summary": "An unauthenticated export API was exploited to exfiltrate 50,214 customer records from Ireland, Germany and India via an external IP hosted by a hosting provider for over six hours without internal system access beyond the compromised endpoint.",
+    "playbookIds": [
+      "PB-EXFIL"
+    ],
+    "stepNotes": [
+      {
+        "stepId": "PB-EXFIL-D1",
+        "note": "Pull WAF logs, API gateway and application logs to identify abused endpoints."
+      },
+      {
+        "stepId": "PB-EXFIL-C3",
+        "note": "Block attacker IPs at the perimeter (203.0.113.45) using a Web Application Firewall or similar technology."
+      }
+    ],
+    "extraSteps": [
+      {
+        "phase": "DETECTION_ANALYSIS",
+        "text": "Identify all affected customers and notify them of potential data exposure, especially those in Ireland, Germany, India as per Microsoft Sentinel alert details. Review the feature flag status to understand why it was left on after release; this may involve coordination with development teams for a patch or fix that re-enables authentication checks by default.",
+        "rationale": "The incident involves unauthenticated access through an API which resulted in data exfiltration, thus requiring immediate detection and analysis of the affected customers as well as investigation into why security features were not enabled."
+      },
+      {
+        "phase": "CONTAINMENT_ERADICATION_RECOVERY",
+        "text": "Assess whether any internal systems beyond customer-facing services have been compromised; if so, initiate recovery procedures. If no further access is detected (as per the incident description), then focus on containment and eradication of this specific breach.",
+        "rationale": "The initial detection did not indicate that there was additional system compromise apart from through API abuse."
+      }
+    ],
+    "techniques": [
+      {
+        "id": "T1567.002",
+        "evidence": "Between 23:05 and 02:10 UTC, external IP ... made requests to /api/v2/accounts/export?includeAll=true"
+      },
+      {
+        "id": "T1190",
+        "evidence": "Customers are mainly in Ireland, Germany and India."
+      }
+    ],
+    "observables": [
+      {
+        "type": "ip",
+        "value": "203.0.113.45"
+      },
+      {
+        "type": "host",
+        "value": "hosting provider"
+      }
+    ],
+    "suggestedFacts": []
+  }
+}

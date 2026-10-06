@@ -1,0 +1,94 @@
+{
+  "fields": [
+    { "key": "nature_of_breach", "label": "Nature of the incident / breach", "type": "textarea", "aiDraftable": true, "help": "What happened, how, and when, in plain language." },
+    { "key": "data_categories", "label": "Categories of personal data affected", "type": "text", "help": "e.g. names, contact details, IBAN, account balances, date of birth" },
+    { "key": "approx_subjects", "label": "Approximate number of people affected", "type": "number", "help": "Data subjects / data principals. An estimate is acceptable at first (GDPR Art. 33(4))." },
+    { "key": "approx_records", "label": "Approximate number of records affected", "type": "number" },
+    { "key": "dpo_contact", "label": "DPO / contact point details", "type": "text", "help": "Name and contact details of the Data Protection Officer or other contact point." },
+    { "key": "likely_consequences", "label": "Likely consequences for individuals", "type": "textarea", "aiDraftable": true, "help": "e.g. fraud, phishing, identity theft, financial loss." },
+    { "key": "measures_taken", "label": "Measures taken or proposed", "type": "textarea", "help": "Containment, remediation, and steps to mitigate harm to individuals." },
+    { "key": "affected_services", "label": "Services / systems affected", "type": "text", "help": "Business services, ICT systems and functions impacted." },
+    { "key": "clients_affected", "label": "Number of clients affected", "type": "number", "help": "DORA classification criterion." },
+    { "key": "reporting_contact", "label": "Regulatory reporting contact", "type": "text", "help": "Person the regulator should contact about this notification." },
+    { "key": "materiality_assessment", "label": "Material aspects: nature, scope, timing, impact", "type": "textarea", "help": "Required by Form 8-K Item 1.05; written by Legal." }
+  ],
+  "profiles": {
+    "GDPR_33": {
+      "title": "GDPR Art. 33(3) notification content",
+      "items": [
+        { "field": "nature_of_breach", "clause": "Art. 33(3)(a)" },
+        { "field": "data_categories", "clause": "Art. 33(3)(a)" },
+        { "field": "approx_subjects", "clause": "Art. 33(3)(a)" },
+        { "field": "approx_records", "clause": "Art. 33(3)(a)" },
+        { "field": "dpo_contact", "clause": "Art. 33(3)(b)" },
+        { "field": "likely_consequences", "clause": "Art. 33(3)(c)" },
+        { "field": "measures_taken", "clause": "Art. 33(3)(d)" },
+        { "system": "awareness_time", "clause": "Art. 33(1) / 33(5)", "label": "Time of awareness (from sealed timeline)" }
+      ]
+    },
+    "GDPR_34": {
+      "title": "GDPR Art. 34(2) communication to individuals",
+      "items": [
+        { "field": "nature_of_breach", "clause": "Art. 34(2)" },
+        { "field": "dpo_contact", "clause": "Art. 34(2) → 33(3)(b)" },
+        { "field": "likely_consequences", "clause": "Art. 34(2) → 33(3)(c)" },
+        { "field": "measures_taken", "clause": "Art. 34(2) → 33(3)(d)" }
+      ]
+    },
+    "DORA_INITIAL": {
+      "title": "DORA initial notification (core content)",
+      "items": [
+        { "field": "nature_of_breach", "clause": "Delegated Reg. 2025/301: incident description" },
+        { "field": "affected_services", "clause": "Delegated Reg. 2025/301: services affected" },
+        { "field": "clients_affected", "clause": "DORA Art. 18(1)(a): clients affected" },
+        { "field": "reporting_contact", "clause": "Delegated Reg. 2025/301: contact details" },
+        { "system": "detection_time", "clause": "Delegated Reg. 2025/301: time of detection", "label": "Time of detection (from sealed timeline)" },
+        { "system": "classification_time", "clause": "Delegated Reg. 2025/301: time of classification", "label": "Time classified as major (from sealed timeline)" }
+      ]
+    },
+    "CERTIN_6H": {
+      "title": "CERT-In incident report",
+      "items": [
+        { "field": "nature_of_breach", "clause": "Directions (ii): incident type & description" },
+        { "field": "affected_services", "clause": "Directions (ii): affected systems" },
+        { "field": "reporting_contact", "clause": "Directions (iii): point of contact" },
+        { "system": "indicators", "clause": "Directions (ii): indicators / logs", "label": "Indicators of compromise (from alert)" },
+        { "system": "detection_time", "clause": "Directions (ii): time of noticing", "label": "Time noticed (from sealed timeline)" }
+      ]
+    },
+    "RBI_6H": {
+      "title": "RBI cyber incident report",
+      "items": [
+        { "field": "nature_of_breach", "clause": "Incident description" },
+        { "field": "affected_services", "clause": "Business impact" },
+        { "field": "measures_taken", "clause": "Containment status" },
+        { "system": "detection_time", "clause": "Time of detection", "label": "Time of detection (from sealed timeline)" }
+      ]
+    },
+    "DPDP_72H": {
+      "title": "DPDP Rules 2025 Rule 7(2)(b) report to the Board",
+      "items": [
+        { "field": "nature_of_breach", "clause": "Rule 7(2)(b)(i): facts, circumstances, reasons" },
+        { "field": "approx_subjects", "clause": "Rule 7(2)(b)(i): extent" },
+        { "field": "likely_consequences", "clause": "Rule 7(2)(b)(i): likely impact" },
+        { "field": "measures_taken", "clause": "Rule 7(2)(b)(ii): mitigation measures" },
+        { "field": "dpo_contact", "clause": "Rule 7(2)(b)(v): contact" }
+      ]
+    },
+    "NYDFS_72H": {
+      "title": "NYDFS 500.17(a) notice",
+      "items": [
+        { "field": "nature_of_breach", "clause": "500.17(a): incident information" },
+        { "field": "affected_services", "clause": "500.17(a): affected systems" },
+        { "field": "measures_taken", "clause": "500.17(a): remediation" },
+        { "field": "reporting_contact", "clause": "500.17(a): contact" }
+      ]
+    },
+    "SEC_8K": {
+      "title": "Form 8-K Item 1.05 disclosure",
+      "items": [
+        { "field": "materiality_assessment", "clause": "Item 1.05(a): material aspects of nature, scope, timing and impact" }
+      ]
+    }
+  }
+}

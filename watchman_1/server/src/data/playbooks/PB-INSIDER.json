@@ -1,0 +1,14 @@
+{
+  "id": "PB-INSIDER",
+  "name": "Insider data theft",
+  "description": "An employee or contractor copies or sends out data they should not.",
+  "keywords": ["insider", "employee", "usb", "personal email", "resign", "contractor", "privileged user", "copied"],
+  "attack": ["T1052.001", "T1567.002", "T1048.003", "T1078"],
+  "steps": [
+    { "id": "PB-INSIDER-D1", "phase": "DETECTION_ANALYSIS", "text": "Involve HR and Legal before acting; investigate discreetly to avoid tipping off the subject.", "evidence": [] },
+    { "id": "PB-INSIDER-D2", "phase": "DETECTION_ANALYSIS", "text": "Reconstruct data movement from DLP, USB, email and cloud-upload logs; quantify records and data types taken.", "evidence": ["DLP incident export"], "attack": ["T1052.001", "T1567.002"], "suggestsFact": "personal_data_breach" },
+    { "id": "PB-INSIDER-C1", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Suspend access in coordination with HR; collect the user's devices under chain of custody.", "evidence": ["Device seizure form"] },
+    { "id": "PB-INSIDER-C2", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Seek recovery/deletion of the data (legal letter, account takedown requests).", "evidence": [] },
+    { "id": "PB-INSIDER-R1", "phase": "POST_INCIDENT", "text": "Review least-privilege access and leaver/joiner controls.", "evidence": [] }
+  ]
+}

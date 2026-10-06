@@ -1,0 +1,189 @@
+{
+  "version": "2026.10-hackathon",
+  "reviewedAt": "2026-10-06",
+  "disclaimer": "Deadlines encoded from public regulatory texts for demonstration. Not legal advice; every obligation must be confirmed by counsel. Items marked 'verify' have known ambiguity or recent amendments.",
+  "regulations": [
+    {
+      "id": "GDPR",
+      "name": "EU General Data Protection Regulation",
+      "jurisdiction": "EU",
+      "regulator": "Lead supervisory authority (e.g. Irish Data Protection Commission)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "stages": [
+        {
+          "id": "GDPR_33",
+          "label": "Notify supervisory authority",
+          "citation": "GDPR Art. 33(1)",
+          "wording": "without undue delay and, where feasible, not later than 72 hours after having become aware of it",
+          "plain": "Tell the data-protection regulator within 72 hours of becoming aware of a personal-data breach. Late notifications must explain the delay.",
+          "when": ["personal_data_breach", "eu_data_subjects"],
+          "deadlines": [{ "from": { "fact": "personal_data_breach" }, "hours": 72 }],
+          "reportProfile": "GDPR_33_3",
+          "waivable": "Only if the breach is unlikely to result in a risk to people's rights and freedoms (Art. 33(1)); the decision must still be documented (Art. 33(5))."
+        },
+        {
+          "id": "GDPR_34",
+          "label": "Notify affected individuals",
+          "citation": "GDPR Art. 34(1)",
+          "wording": "without undue delay",
+          "plain": "If the breach is likely to cause HIGH risk to people, tell them directly, in clear language, without undue delay.",
+          "when": ["personal_data_breach", "eu_data_subjects", "high_risk_to_individuals"],
+          "noFixedDeadline": "Without undue delay (no fixed hour count)",
+          "deadlines": []
+        }
+      ]
+    },
+    {
+      "id": "DORA",
+      "name": "EU Digital Operational Resilience Act",
+      "jurisdiction": "EU",
+      "regulator": "National competent authority (e.g. Central Bank of Ireland / ECB for significant banks)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj",
+      "stages": [
+        {
+          "id": "DORA_INITIAL",
+          "label": "Initial notification",
+          "citation": "DORA Art. 19(4)(a); Commission Delegated Regulation (EU) 2025/301 Art. 5",
+          "wording": "within 4 hours from classification as major, and no later than 24 hours from becoming aware of the incident",
+          "plain": "Once an incident is classed as MAJOR, send an initial notice within 4 hours, but never later than 24 hours after you first detected it.",
+          "when": ["cyber_incident_detected", "major_ict_incident"],
+          "deadlines": [
+            { "from": { "fact": "major_ict_incident" }, "hours": 4 },
+            { "from": { "fact": "cyber_incident_detected" }, "hours": 24 }
+          ],
+          "reportProfile": "DORA_INITIAL"
+        },
+        {
+          "id": "DORA_INTERMEDIATE",
+          "label": "Intermediate report",
+          "citation": "DORA Art. 19(4)(b); Delegated Reg. (EU) 2025/301 Art. 5",
+          "wording": "within 72 hours from the submission of the initial notification",
+          "plain": "Follow up with more detail within 72 hours of sending the initial notice.",
+          "when": ["major_ict_incident"],
+          "deadlines": [{ "from": { "submitted": "DORA_INITIAL" }, "hours": 72 }]
+        },
+        {
+          "id": "DORA_FINAL",
+          "label": "Final report",
+          "citation": "DORA Art. 19(4)(c); Delegated Reg. (EU) 2025/301 Art. 5",
+          "wording": "within one month from the latest updated intermediate report",
+          "plain": "A full final report including root cause, within one month of the intermediate report.",
+          "when": ["major_ict_incident"],
+          "deadlines": [{ "from": { "submitted": "DORA_INTERMEDIATE" }, "months": 1 }]
+        }
+      ]
+    },
+    {
+      "id": "CERTIN",
+      "name": "CERT-In Directions under IT Act s.70B(6)",
+      "jurisdiction": "IN",
+      "regulator": "Indian Computer Emergency Response Team (CERT-In)",
+      "url": "https://www.cert-in.org.in/Directions70B.jsp",
+      "stages": [
+        {
+          "id": "CERTIN_6H",
+          "label": "Report to CERT-In",
+          "citation": "CERT-In Directions No. 20(3)/2022-CERT-In (28 Apr 2022), para (ii)",
+          "wording": "within 6 hours of noticing such incidents or being brought to notice about such incidents",
+          "plain": "Report listed cyber incidents (data breaches, ransomware, unauthorised access…) to CERT-In within 6 hours of noticing them.",
+          "when": ["cyber_incident_detected"],
+          "deadlines": [{ "from": { "fact": "cyber_incident_detected" }, "hours": 6 }]
+        }
+      ]
+    },
+    {
+      "id": "RBI",
+      "name": "RBI cyber incident reporting for banks",
+      "jurisdiction": "IN",
+      "regulator": "Reserve Bank of India (CSITE Cell)",
+      "url": "https://www.rbi.org.in/",
+      "verify": "RBI's 2016 Cyber Security Framework said 2–6 hours; the 2023 IT Governance Master Direction says 6 hours. Confirm the current circular.",
+      "stages": [
+        {
+          "id": "RBI_6H",
+          "label": "Report to RBI",
+          "citation": "RBI Master Direction on IT Governance, Risk, Controls & Assurance Practices (7 Nov 2023); Cyber Security Framework in Banks (2 Jun 2016)",
+          "wording": "within 6 hours of detection",
+          "plain": "Banks regulated by the Reserve Bank of India must report cyber incidents within 6 hours of detecting them.",
+          "when": ["cyber_incident_detected"],
+          "deadlines": [{ "from": { "fact": "cyber_incident_detected" }, "hours": 6 }]
+        }
+      ]
+    },
+    {
+      "id": "DPDP",
+      "name": "India Digital Personal Data Protection Act 2023 & Rules 2025",
+      "jurisdiction": "IN",
+      "regulator": "Data Protection Board of India",
+      "url": "https://www.meity.gov.in/",
+      "verify": "Timelines from the DPDP Rules 2025 (Rule 7); phased commencement, so confirm they are in force for this entity.",
+      "stages": [
+        {
+          "id": "DPDP_INTIMATION",
+          "label": "Intimate Board & affected people",
+          "citation": "DPDP Act 2023 s.8(6); DPDP Rules 2025 Rule 7(1)–(2)(a)",
+          "wording": "without delay",
+          "plain": "Tell the Data Protection Board and every affected person without delay: what happened, the likely impact, and what they can do.",
+          "when": ["personal_data_breach", "india_data_principals"],
+          "noFixedDeadline": "Without delay (no fixed hour count)",
+          "deadlines": []
+        },
+        {
+          "id": "DPDP_72H",
+          "label": "Detailed report to Board",
+          "citation": "DPDP Rules 2025 Rule 7(2)(b)",
+          "wording": "within 72 hours of becoming aware of the breach, or such longer period as the Board may allow",
+          "plain": "Send the Board a detailed report (facts, cause, mitigation, people notified) within 72 hours of becoming aware.",
+          "when": ["personal_data_breach", "india_data_principals"],
+          "deadlines": [{ "from": { "fact": "personal_data_breach" }, "hours": 72 }]
+        }
+      ]
+    },
+    {
+      "id": "NYDFS",
+      "name": "NYDFS Cybersecurity Regulation (23 NYCRR 500)",
+      "jurisdiction": "US-NY",
+      "regulator": "New York State Department of Financial Services",
+      "url": "https://www.dfs.ny.gov/industry_guidance/cybersecurity",
+      "stages": [
+        {
+          "id": "NYDFS_72H",
+          "label": "Notify DFS of cybersecurity incident",
+          "citation": "23 NYCRR 500.17(a)(1)",
+          "wording": "as promptly as possible but in no event later than 72 hours after determining that a cybersecurity incident has occurred",
+          "plain": "Notify New York's financial regulator within 72 hours of determining a reportable incident occurred.",
+          "when": ["nydfs_reportable"],
+          "deadlines": [{ "from": { "fact": "nydfs_reportable" }, "hours": 72 }]
+        },
+        {
+          "id": "NYDFS_EXTORTION",
+          "label": "Notice of extortion payment",
+          "citation": "23 NYCRR 500.17(c)(1)",
+          "wording": "within 24 hours of the extortion payment",
+          "plain": "If a ransom is paid, notify DFS within 24 hours, and explain why within 30 days.",
+          "when": ["ransom_paid"],
+          "deadlines": [{ "from": { "fact": "ransom_paid" }, "hours": 24 }]
+        }
+      ]
+    },
+    {
+      "id": "SEC",
+      "name": "SEC cybersecurity incident disclosure",
+      "jurisdiction": "US-SEC",
+      "regulator": "U.S. Securities and Exchange Commission (Form 8-K)",
+      "url": "https://www.sec.gov/files/rules/final/2023/33-11216.pdf",
+      "verify": "Counts weekdays only; US federal holidays and the 5:30pm ET filing cut-off are not modelled.",
+      "stages": [
+        {
+          "id": "SEC_8K",
+          "label": "File Form 8-K Item 1.05",
+          "citation": "Form 8-K Item 1.05; General Instruction B.1",
+          "wording": "within four business days after the registrant determines that a cybersecurity incident is material",
+          "plain": "Public disclosure within 4 BUSINESS days of deciding the incident is material to investors. Weekends don't count.",
+          "when": ["material_incident"],
+          "deadlines": [{ "from": { "fact": "material_incident" }, "businessDays": 4 }]
+        }
+      ]
+    }
+  ]
+}

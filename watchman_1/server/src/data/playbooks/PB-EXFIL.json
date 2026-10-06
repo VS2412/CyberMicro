@@ -1,0 +1,17 @@
+{
+  "id": "PB-EXFIL",
+  "name": "Data exfiltration via application / API",
+  "description": "Customer or confidential data pulled out through a web application, API, or misconfigured cloud service.",
+  "keywords": ["exfil", "export", "api", "dump", "download", "records", "leak", "dlp", "bulk", "scrap"],
+  "attack": ["T1190", "T1530", "T1567", "T1213"],
+  "steps": [
+    { "id": "PB-EXFIL-D1", "phase": "DETECTION_ANALYSIS", "text": "Pull WAF, API gateway and application logs for the abused endpoint; identify every source IP, token and request in the window.", "evidence": ["WAF logs", "API gateway access logs"], "attack": ["T1190"] },
+    { "id": "PB-EXFIL-D2", "phase": "DETECTION_ANALYSIS", "text": "Scope the data: which fields and how many records/people were returned; does it include personal data, and from which countries?", "evidence": ["Record count query output", "Data-field inventory"], "suggestsFact": "personal_data_breach" },
+    { "id": "PB-EXFIL-D3", "phase": "DETECTION_ANALYSIS", "text": "Check for further access beyond the API (pivoting into internal systems) using EDR and identity logs.", "evidence": ["EDR timeline"] },
+    { "id": "PB-EXFIL-C1", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Close the hole: disable the vulnerable endpoint or feature flag, and block attacker IPs at the WAF/perimeter.", "evidence": ["Change ticket", "WAF rule export"] },
+    { "id": "PB-EXFIL-C2", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Revoke and rotate any API keys, tokens or service credentials that could have been exposed.", "evidence": ["Key rotation log"] },
+    { "id": "PB-EXFIL-C3", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Fix the root cause (authentication check, input validation) and retest before re-enabling; add monitoring for bulk responses.", "evidence": ["Pen-test / retest result"] },
+    { "id": "PB-EXFIL-C4", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Enable fraud monitoring on affected accounts and prepare customer communications with the DPO.", "evidence": [] },
+    { "id": "PB-EXFIL-R1", "phase": "POST_INCIDENT", "text": "Review the release process that allowed the misconfiguration (feature-flag hygiene, pre-release security tests).", "evidence": [] }
+  ]
+}

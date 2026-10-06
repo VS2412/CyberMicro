@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { createIncident, getIncidentById } from '../controllers/incident.controller.js';
+import { createIncident, getIncidentById, listIncidents } from '../controllers/incident.controller.js';
+import { handle } from '../utils/httpError.js';
 
 const router = Router();
 
-router.post('/', createIncident);
-router.get('/:id', getIncidentById);
+router.get('/', handle(listIncidents));
+router.post('/', handle(createIncident));
+router.get('/:id', handle(getIncidentById));
 
 export default router;

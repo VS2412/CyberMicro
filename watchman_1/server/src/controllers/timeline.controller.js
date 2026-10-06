@@ -1,56 +1,25 @@
-import { Incident } from '../models/Incident.js';
-import { generateEventHash, verifyChainIntegrity, GENESIS_HASH } from '../utils/cryptoChain.js';
+import { NIST_PHASES } from '../models/Incident.js';
+import { appendEvent, verifyChain } from '../utils/cryptoChain.js';
+import { findIncident, mutateIncident, serializeIncident } from '../services/incidentStore.js';
+import { HttpError, actorFrom } from '../utils/httpError.js';
 
+// Responder logs a free-text action/observation into the sealed timeline.
 export async function addTimelineAction(req, res) {
-  try {
-    const { id } = req.params;
-    const { action, phase, responder, details } = req.body;
+  const { action, phase, details } = req.body || {};
+  if (!action?.trim()) throw new HttpError(400, 'action is required');
+  if (phase && !NIST_PHASES.includes(phase)) throw new HttpError(400, `phase must be one of ${NIST_PHASES.join(', ')}`);
+  const { actor, role } = actorFrom(req);
 
-    const incident = await Incident.findById(id);
-    if (!incident) return res.status(404).json({ error: 'Incident not found' });
-
-    const timestamp = new Date();
-    const lastEvent = incident.timeline[incident.timeline.length - 1];
-    const previousHash = lastEvent ? lastEvent.currentHash : GENESIS_HASH;
-
-    const currentHash = generateEventHash({
-      previousHash,
-      action,
-      responder,
-      details,
-      timestamp,
-    });
-
-    incident.timeline.push({
-      timestamp,
-      action,
-      phase,
-      responder,
-      details,
-      previousHash,
-      currentHash,
-    });
-
-    await incident.save();
-    req.log.info({ incidentId: id, hash: currentHash }, 'Timeline action appended');
-    return res.status(200).json({ success: true, timeline: incident.timeline });
-  } catch (error) {
-    req.log.error({ error }, 'Failed to append timeline event');
-    return res.status(500).json({ error: 'Internal Server Error' });
-  }
+  const { incident } = await mutateIncident(req.params.id, (inc) => {
+    appendEvent(inc, { type: 'NOTE', action: action.trim().slice(0, 500), phase, actor, role, details: details || {} });
+  });
+  req.log.info({ incidentId: req.params.id }, 'Timeline action appended');
+  res.json(serializeIncident(incident));
 }
 
 export async function verifyAuditChain(req, res) {
-  try {
-    const { id } = req.params;
-    const incident = await Incident.findById(id).lean();
-    if (!incident) return res.status(404).json({ error: 'Incident not found' });
-
-    const verificationResult = verifyChainIntegrity(incident.timeline);
-    req.log.info({ incidentId: id, valid: verificationResult.valid }, 'Chain integrity checked');
-    return res.status(200).json(verificationResult);
-  } catch (error) {
-    req.log.error({ error }, 'Verification execution failed');
-    return res.status(500).json({ error: 'Verification failed', details: error.message });
-  }
+  const incident = await findIncident(req.params.id);
+  const result = verifyChain(incident.timeline);
+  req.log.info({ incidentId: req.params.id, valid: result.valid }, 'Chain integrity checked');
+  res.json(result);
 }

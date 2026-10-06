@@ -1,0 +1,17 @@
+{
+  "id": "PB-RANSOM",
+  "name": "Ransomware / destructive malware",
+  "description": "Files or systems encrypted by malware, typically with a ransom demand and possible data theft (double extortion).",
+  "keywords": ["ransom", "encrypt", "lockbit", "vssadmin", "shadow cop", "ransom note", "extortion", ".lock", "beacon", "c2"],
+  "attack": ["T1486", "T1490", "T1021.001", "T1071.001", "T1078.002", "T1041"],
+  "steps": [
+    { "id": "PB-RANSOM-D1", "phase": "DETECTION_ANALYSIS", "text": "Identify every affected host and the first infected machine (patient zero) using EDR; capture memory from at least one live infected host.", "evidence": ["EDR device timeline", "Memory image"], "attack": ["T1486"] },
+    { "id": "PB-RANSOM-D2", "phase": "DETECTION_ANALYSIS", "text": "Determine whether data was stolen before encryption (double extortion): review egress volumes to C2 / file-sharing destinations.", "evidence": ["Firewall egress logs", "Proxy logs"], "attack": ["T1041"], "suggestsFact": "personal_data_breach" },
+    { "id": "PB-RANSOM-C1", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Isolate affected hosts from the network (EDR network containment); do NOT power them off, to preserve memory evidence.", "evidence": ["Containment action log"] },
+    { "id": "PB-RANSOM-C2", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Disable compromised accounts (especially privileged/service accounts) and reset credentials, including KRBTGT twice if domain admin was used.", "evidence": ["Account change log"], "attack": ["T1078.002"] },
+    { "id": "PB-RANSOM-C3", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Block C2 domains/IPs at the perimeter and DNS; hunt for the same indicators across the estate.", "evidence": ["Blocklist change ticket"], "attack": ["T1071.001"] },
+    { "id": "PB-RANSOM-C4", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Verify backups are clean and offline, then restore from known-good backups in priority order (customer-facing services first).", "evidence": ["Backup integrity check", "Restore log"], "attack": ["T1490"] },
+    { "id": "PB-RANSOM-C5", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Any decision on ransom payment goes to the executive crisis team with Legal; check sanctions lists. Payment triggers NYDFS 24h notice.", "evidence": ["Crisis-team decision record"] },
+    { "id": "PB-RANSOM-R1", "phase": "POST_INCIDENT", "text": "Close the initial access vector, review privileged-access tiering, and test backup restoration as a regular exercise.", "evidence": [] }
+  ]
+}

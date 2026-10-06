@@ -1,59 +1,59 @@
 import { Incident } from '../models/Incident.js';
-import { generateEventHash, GENESIS_HASH } from '../utils/cryptoChain.js';
+import { appendEvent } from '../utils/cryptoChain.js';
+import { findIncident, serializeIncident } from '../services/incidentStore.js';
+import { HttpError, actorFrom } from '../utils/httpError.js';
+import { findScenario, fromSentinel } from '../services/scenarios.js';
 
 export async function createIncident(req, res) {
-  try {
-    const { title, description, severity, dataBreachConfirmed, responder = 'SecOps Responder' } = req.body;
-    const startedAt = new Date();
-    const isBreach = Boolean(dataBreachConfirmed);
-
-    const initialHash = generateEventHash({
-      previousHash: GENESIS_HASH,
-      action: 'Incident Initialized',
-      responder,
-      details: { title, severity },
-      timestamp: startedAt,
-    });
-
-    const incident = new Incident({
-      title,
-      description,
-      severity,
-      regulatoryClock: {
-        triggered: isBreach,
-        startedAt: isBreach ? startedAt : undefined,
-        deadline: isBreach ? new Date(startedAt.getTime() + 72 * 60 * 60 * 1000) : undefined,
-        dataBreachConfirmed: isBreach,
-      },
-      timeline: [
-        {
-          timestamp: startedAt,
-          action: 'Incident Initialized',
-          phase: 'DETECTION_ANALYSIS',
-          responder,
-          details: { title, severity },
-          previousHash: GENESIS_HASH,
-          currentHash: initialHash,
-        },
-      ],
-    });
-
-    await incident.save();
-    req.log.info({ incidentId: incident._id }, 'Incident initialized');
-    return res.status(201).json(incident);
-  } catch (error) {
-    req.log.error({ error }, 'Failed to create incident');
-    return res.status(500).json({ error: 'Internal Server Error' });
+  let { title, description, severity = 'MEDIUM', source, scenarioId, sentinel } = req.body || {};
+  if (sentinel) {
+    const m = fromSentinel(sentinel);
+    if (!m.title || !m.description) throw new HttpError(400, 'Could not find a title and description in the pasted Sentinel incident');
+    ({ title, description, severity } = m);
+    source = { kind: 'sentinel', alert: m.alert };
   }
+  if (scenarioId) {
+    const sc = findScenario(scenarioId);
+    if (!sc) throw new HttpError(400, `Unknown scenario ${scenarioId}`);
+    ({ title, description, severity } = sc);
+    source = { kind: 'sentinel', scenarioId: sc.id, alert: sc.sentinel };
+  }
+  if (!title?.trim() || !description?.trim()) throw new HttpError(400, 'title and description are required');
+  const { actor, role } = actorFrom(req);
+
+  const incident = new Incident({
+    title,
+    description,
+    severity,
+    source: source && typeof source === 'object' ? source : { kind: 'manual' },
+
+  });
+  appendEvent(incident, {
+    type: 'INCIDENT_CREATED',
+    action: 'Incident opened',
+    phase: 'DETECTION_ANALYSIS',
+    actor,
+    role,
+    details: {
+      title, severity, description,
+      source: incident.source?.kind,
+      sentinelIncident: incident.source?.alert?.incidentNumber,
+    },
+  });
+
+  await incident.save();
+  req.log.info({ incidentId: incident._id }, 'Incident initialized');
+  res.status(201).json(serializeIncident(incident));
+}
+
+export async function listIncidents(req, res) {
+  const incidents = await Incident.find({}, 'title severity status createdAt')
+    .sort({ createdAt: -1 })
+    .limit(50)
+    .lean();
+  res.json(incidents);
 }
 
 export async function getIncidentById(req, res) {
-  try {
-    const incident = await Incident.findById(req.params.id).lean();
-    if (!incident) return res.status(404).json({ error: 'Incident not found' });
-    return res.status(200).json(incident);
-  } catch (error) {
-    req.log.error({ error }, 'Failed to fetch incident');
-    return res.status(500).json({ error: 'Internal Server Error' });
-  }
+  res.json(serializeIncident(await findIncident(req.params.id)));
 }

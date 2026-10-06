@@ -1,0 +1,56 @@
+{
+  "recordedAt": "2026-10-06T11:14:23.942Z",
+  "provider": "ollama",
+  "model": "phi4-mini",
+  "onDevice": true,
+  "mode": "live",
+  "output": {
+    "summary": "A CFO's Microsoft Entra ID was compromised through a fake supplier invoice link leading to an adversary-in-the-middle attack and subsequent mailbox takeover with forwarding rules set up for sensitive terms like 'invoice' or 'payment'. There is uncertainty if customer data has been accessed, but there may be implications under GDPR/EU regulations due to the involvement of EU/EEA subjects. The incident involves a potential financial loss in EUR 1.2M.",
+    "playbookIds": [
+      "PB-BEC"
+    ],
+    "stepNotes": [
+      {
+        "stepId": "PB-BEC-D1",
+        "note": "Review sign-in logs for CFO account: risky sessions from London and IP address 192.0.2.77."
+      },
+      {
+        "stepId": "PB-BEC-C3",
+        "note": "Block the external Gmail forwarding addresses linked to invoice/payment terms, especially concerning EUR 1.2M payment request."
+      }
+    ],
+    "extraSteps": [
+      {
+        "phase": "DETECTION_ANALYSIS",
+        "text": "Determine if personal data was accessed by reviewing mailbox contents for 'invoice' or 'payment'. If confirmed and EU/EEA subjects are involved, GDPR implications may arise. Assess the need to notify supervisory authorities under applicable laws such as NIS2 in case of a security incident involving financial services providers (PSPs).",
+        "rationale": "The description suggests uncertainty about data access but indicates potential personal or sensitive customer information exposure and involvement with EU/EEA subjects, which may trigger GDPR obligations."
+      },
+      {
+        "phase": "CONTAINMENT_ERADICATION_RECOVERY",
+        "text": "Contact the supplier to confirm if their systems were compromised. If so, work on recovery of data from backups while ensuring no further access through changed bank details or other means.",
+        "rationale": "The incident description implies a potential compromise with an external party (supplier), which may have led to unauthorized changes in banking information."
+      }
+    ],
+    "techniques": [
+      {
+        "id": "T1557",
+        "evidence": "adversary-in-the-middle login page"
+      },
+      {
+        "id": "T1566.002",
+        "evidence": "'Impossible travel' and 'Anomalous token'"
+      }
+    ],
+    "observables": [
+      {
+        "type": "email",
+        "value": "forwarding rule for invoice/payment terms to an external Gmail address"
+      },
+      {
+        "type": "account",
+        "value": "CFO account with Microsoft Entra ID"
+      }
+    ],
+    "suggestedFacts": []
+  }
+}

@@ -1,0 +1,96 @@
+[
+  {
+    "key": "cyber_incident_detected",
+    "label": "Cyber incident detected",
+    "question": "Has a cyber security incident been detected / brought to our notice?",
+    "help": "The moment the bank notices a real security incident (not just a noisy alert). Starts India's 6-hour CERT-In and RBI clocks and DORA's 24-hour outer limit.",
+    "allowedRoles": [
+      "ANALYST",
+      "INCIDENT_COMMANDER"
+    ]
+  },
+  {
+    "key": "personal_data_breach",
+    "label": "Personal-data breach confirmed",
+    "question": "Are we reasonably certain that personal data was accessed, stolen, altered or lost?",
+    "help": "Legally this is the moment of 'awareness'. GDPR's 72 hours and India's DPDP 72 hours start here, NOT when the first alert fired.",
+    "allowedRoles": [
+      "INCIDENT_COMMANDER",
+      "DPO"
+    ]
+  },
+  {
+    "key": "eu_data_subjects",
+    "label": "EU/EEA residents affected",
+    "question": "Does the affected data include people in the EU/EEA?",
+    "help": "Decides whether GDPR applies to this breach.",
+    "allowedRoles": [
+      "ANALYST",
+      "INCIDENT_COMMANDER",
+      "DPO"
+    ]
+  },
+  {
+    "key": "india_data_principals",
+    "label": "Indian residents affected",
+    "question": "Does the affected data include people in India?",
+    "help": "Decides whether India's DPDP Act applies.",
+    "allowedRoles": [
+      "ANALYST",
+      "INCIDENT_COMMANDER",
+      "DPO"
+    ]
+  },
+  {
+    "key": "high_risk_to_individuals",
+    "label": "High risk to individuals",
+    "question": "Is the breach likely to cause HIGH risk to people (fraud, identity theft, financial loss)?",
+    "help": "If yes, GDPR Art. 34 also requires telling the affected people directly. A DPO judgement call.",
+    "allowedRoles": [
+      "DPO"
+    ],
+    "aiMaySuggest": false
+  },
+  {
+    "key": "major_ict_incident",
+    "label": "DORA: classified as MAJOR",
+    "question": "Has the incident been classified as a MAJOR ICT-related incident under DORA's criteria?",
+    "help": "DORA's initial notice is due 4 hours after this classification (and no later than 24h after detection).",
+    "allowedRoles": [
+      "INCIDENT_COMMANDER"
+    ],
+    "aiMaySuggest": false
+  },
+  {
+    "key": "nydfs_reportable",
+    "label": "NYDFS: reportable incident determined",
+    "question": "Have we determined that a reportable cybersecurity incident occurred (23 NYCRR 500.17)?",
+    "help": "Starts New York DFS's 72-hour clock.",
+    "allowedRoles": [
+      "INCIDENT_COMMANDER",
+      "LEGAL"
+    ],
+    "aiMaySuggest": false
+  },
+  {
+    "key": "material_incident",
+    "label": "SEC: determined MATERIAL",
+    "question": "Has the company determined the incident is material to investors?",
+    "help": "A legal/board decision. Starts the SEC Form 8-K clock of 4 BUSINESS days. The AI is never allowed to suggest this one.",
+    "allowedRoles": [
+      "LEGAL"
+    ],
+    "aiMaySuggest": false
+  },
+  {
+    "key": "ransom_paid",
+    "label": "Ransom / extortion paid",
+    "question": "Has the bank made an extortion (ransom) payment?",
+    "help": "NYDFS requires notice within 24 hours of any extortion payment.",
+    "allowedRoles": [
+      "INCIDENT_COMMANDER",
+      "LEGAL"
+    ],
+    "aiMaySuggest": false
+  }
+]

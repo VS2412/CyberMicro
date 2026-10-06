@@ -1,0 +1,18 @@
+{
+  "id": "PB-CORE",
+  "name": "Core incident handling (always applies)",
+  "description": "Baseline steps every incident follows, from NIST SP 800-61 Rev. 2 section 3 and the bank's IR policy.",
+  "core": true,
+  "keywords": [],
+  "attack": [],
+  "steps": [
+    { "id": "PB-CORE-P1", "phase": "PREPARATION", "text": "Activate the incident response team and open a dedicated war-room channel; assign an Incident Commander and a scribe.", "evidence": [] },
+    { "id": "PB-CORE-P2", "phase": "PREPARATION", "text": "Issue a legal hold so logs, mailboxes and backups relevant to the incident are not deleted by retention policies.", "evidence": ["Legal hold notice"] },
+    { "id": "PB-CORE-D1", "phase": "DETECTION_ANALYSIS", "text": "Validate the alert: confirm it is a real incident (not a false positive) and record when the bank first became aware.", "evidence": ["Original SIEM alert export"], "suggestsFact": "cyber_incident_detected" },
+    { "id": "PB-CORE-D2", "phase": "DETECTION_ANALYSIS", "text": "Assess functional and information impact; set severity; brief the DPO and Legal if personal data or customer funds may be involved.", "evidence": [] },
+    { "id": "PB-CORE-D3", "phase": "DETECTION_ANALYSIS", "text": "Assess whether the incident meets DORA's criteria for a MAJOR ICT-related incident (clients affected, duration, data loss, critical services, economic impact).", "evidence": ["DORA classification worksheet"], "suggestsFact": "major_ict_incident" },
+    { "id": "PB-CORE-C1", "phase": "CONTAINMENT_ERADICATION_RECOVERY", "text": "Preserve volatile and log evidence BEFORE remediation: hash every evidence file and register it with a custodian.", "evidence": ["Evidence register"] },
+    { "id": "PB-CORE-R1", "phase": "POST_INCIDENT", "text": "Hold a lessons-learned review within two weeks; record root cause, what worked, and control improvements.", "evidence": ["Lessons-learned minutes"] },
+    { "id": "PB-CORE-R2", "phase": "POST_INCIDENT", "text": "Finalise the incident report and regulatory follow-ups; retain the sealed timeline per the bank's record-retention policy.", "evidence": ["Final incident report"] }
+  ]
+}

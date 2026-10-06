@@ -1,0 +1,23 @@
+{
+  "id": "api-exfil",
+  "title": "Customer records exfiltrated via unauthenticated export API",
+  "severity": "HIGH",
+  "summary": "Bulk download of customer PII (EU + India) through a misconfigured public API.",
+  "description": "Microsoft Sentinel analytic rule 'Anomalous data volume from public API' fired at 02:14 UTC. Between 23:05 and 02:10 UTC, external IP 203.0.113.45 made 1,840 requests to /api/v2/accounts/export?includeAll=true, which skipped authentication because of a feature flag left on after a release. WAF logs show 50,214 customer records returned (full name, email, phone, IBAN, account balance, date of birth). Customers are mainly in Ireland, Germany and India. The source IP is a hosting provider. No sign so far that internal systems were accessed beyond the API.",
+  "sentinel": {
+    "providerName": "Microsoft Sentinel",
+    "incidentNumber": 4127,
+    "title": "Anomalous data volume from public API",
+    "severity": "High",
+    "status": "New",
+    "firstActivityTimeUtc": "2026-10-05T23:05:12Z",
+    "lastActivityTimeUtc": "2026-10-06T02:10:48Z",
+    "tactics": ["InitialAccess", "Collection", "Exfiltration"],
+    "entities": [
+      { "kind": "Ip", "address": "203.0.113.45" },
+      { "kind": "Url", "url": "https://api.contosobank.example/api/v2/accounts/export?includeAll=true" },
+      { "kind": "CloudApplication", "appName": "Contoso Open Banking API" }
+    ],
+    "alertProductNames": ["Azure Web Application Firewall", "Microsoft Purview DLP"]
+  }
+}

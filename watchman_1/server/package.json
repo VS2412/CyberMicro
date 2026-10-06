@@ -1,11 +1,14 @@
 {
-  "name": "incident-response-backen",
+  "name": "watchman-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "nodemon src/server.js",
+  "description": "Watchman incident-response API server",
+  "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js | pino-pretty -c",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "db": "node -e \"require('fs').mkdirSync('../../.mongo-data',{recursive:true})\" && mongod --dbpath ../../.mongo-data --bind_ip 127.0.0.1 --port 27017 --quiet",
+    "test": "node --test \"test/**/*.test.js\"",
+    "setup": "node scripts/setup-env.mjs"
   },
   "keywords": [],
   "author": "",

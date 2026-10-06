@@ -1,0 +1,6 @@
+{
+  "name": "Contoso Bank plc",
+  "description": "Fictional multinational bank used for the demo: EU-regulated entity, Indian branch, New York DFS licence, NYSE-listed.",
+  "jurisdictions": ["EU", "IN", "US-NY", "US-SEC"],
+  "dpo": "Not yet recorded: add it in the report fields"
+}

@@ -1,1 +1,58 @@
+# ---------------------------------------------------------------
+# Secrets: NEVER commit these (API keys, database passwords, signing key)
+# ---------------------------------------------------------------
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# ---------------------------------------------------------------
+# Installed libraries: everyone re-creates these with `npm install`
+# ---------------------------------------------------------------
+node_modules/
+
+# ---------------------------------------------------------------
+# Local database files (created by `npm run db`)
+# ---------------------------------------------------------------
+.mongo-data/
+
+# ---------------------------------------------------------------
+# Build output, logs, caches
+# ---------------------------------------------------------------
+dist/
+dist-ssr/
+build/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.cache/
+.vite/
+*.local
+*.tsbuildinfo
+
+# Big raw downloads (we only commit the compact attack.min.json)
+enterprise-attack.json
+
+# Exported reports / evidence created while testing (keep demo-evidence/)
+Watchman-*.pdf
+watchman-*-attack-layer.json
+
+# ---------------------------------------------------------------
+# Editor & OS clutter
+# ---------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.suo
+*.sw?

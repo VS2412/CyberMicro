@@ -1,0 +1,32 @@
+{
+  "providerName": "Microsoft Sentinel",
+  "incidentNumber": 4127,
+  "title": "Anomalous data volume from public API",
+  "severity": "High",
+  "status": "New",
+  "firstActivityTimeUtc": "2026-10-05T23:05:12Z",
+  "lastActivityTimeUtc": "2026-10-06T02:10:48Z",
+  "tactics": [
+    "InitialAccess",
+    "Collection",
+    "Exfiltration"
+  ],
+  "entities": [
+    {
+      "kind": "Ip",
+      "address": "203.0.113.45"
+    },
+    {
+      "kind": "Url",
+      "url": "https://api.contosobank.example/api/v2/accounts/export?includeAll=true"
+    },
+    {
+      "kind": "CloudApplication",
+      "appName": "Contoso Open Banking API"
+    }
+  ],
+  "alertProductNames": [
+    "Azure Web Application Firewall",
+    "Microsoft Purview DLP"
+  ]
+}

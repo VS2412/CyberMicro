@@ -1,0 +1,8 @@
+timestamp_utc,client_ip,method,path,status,bytes_out,user_agent,waf_rule
+2026-10-05T23:05:12Z,203.0.113.45,GET,/api/v2/accounts/export?includeAll=true&page=1,200,184213,python-requests/2.32,none
+2026-10-05T23:05:19Z,203.0.113.45,GET,/api/v2/accounts/export?includeAll=true&page=2,200,183977,python-requests/2.32,none
+2026-10-05T23:05:26Z,203.0.113.45,GET,/api/v2/accounts/export?includeAll=true&page=3,200,184402,python-requests/2.32,none
+2026-10-05T23:41:02Z,198.51.100.9,GET,/api/v2/accounts/me,401,312,ContosoMobile/7.2,none
+2026-10-06T01:30:09Z,203.0.113.45,GET,/api/v2/accounts/export?includeAll=true&page=1402,200,183560,python-requests/2.32,none
+2026-10-06T02:10:48Z,203.0.113.45,GET,/api/v2/accounts/export?includeAll=true&page=1840,200,96881,python-requests/2.32,none
+2026-10-06T02:14:03Z,-,-,-,-,-,-,SENTINEL ANALYTIC 'Anomalous data volume from public API' fired (incident 4127)
