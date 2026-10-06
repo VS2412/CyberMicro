@@ -447,3 +447,8 @@ Plain-English summary of what we found in the starting code:
 - 🟧 **The report claimed "GDPR Article 33"** but had none of the fields Article 33 requires.
 - 🟨 **Styling bugs.** Panels had no background because two colour names were never defined. Refreshing the page lost the incident.
 - ✅ **Good news.** The basic tamper-evident hash chain already worked, no passwords or API keys were written in the code, and the secret settings file is not tracked by git.
+
+
+## 2026-10-07: Complete hands-on manual
+
+Added `docs/MANUAL.md`: a baby-steps guide to every screen, button, role and feature. It walks through three full incident stories (API data theft, ransomware, CFO email takeover) played by all four roles, the tamper/evidence/fake-code demos, a rulebook cheat-sheet (which decision starts which clock), a permissions table, AI modes and checks, settings, troubleshooting, and a final "seen everything" checklist. All facts were taken from the actual code (rules JSON, controllers, components), not guessed.
